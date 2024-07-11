@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Predictor</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<style>
+    body{
+      background:linear-gradient(90deg, rgba(5,5,5,1) 26%, rgba(54,52,52,1) 58%, rgba(122,124,130,1) 100%, rgba(55,90,220,1) 100%, rgba(0,158,161,1) 100%, rgba(9,182,245,1) 100%, rgba(99,130,227,1) 100%);
+    }
+    .t{
+     background-color:lightblue;
+     border-radius:5px;
+     
+
+    }
+    .container1{
+        display:flex;
+        flex-direction:row;
+        height:750px;
+        width:1450px;
+    }
+    #main-container{
+        display:flex;
+        height:600px;
+        width:550px;
+        background-color:#e3f6f5;
+        border-radius:5px;
+        box-shadow: 2px 2px 2px 2px black;
+        
+    }
+    #states{
+        width:200px;
+    }
+    .result{
+        
+        height:600px;
+        width:760px;
+        color:white;
+        padding:7px;
+        
+    }
+    .result-text{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Fixed typo from align-item to align-items */
+    background-color: lightblue;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Added blur and opacity to the box-shadow */
+    height: 50px;
+    width: 750px;
+    font-weight: bold; /* Makes the text bold */
+    color: #333; /* Dark grey color for text */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Adds a subtle shadow to the text */
+    text-align: center; /* Centers the text horizontally */
+    margin-bottom:0px;
+    border-color:black 2px;
+    }
+    .data{
+        background-color:black;
+        font-size:14px;
+        width:750px;
+    }
+    .image img{
+        margin-top:0.5px;
+        height:250px;
+        width:750px;
+    }
+</style>
+<body>
+    <div class="container mt-5">
+        <h1 class="t text-center">Weather Predictor</h1>
+    </div>
+    <div class="container1">
+        <div class="main-container mt-5 ml-5 p-3" id="main-container">
+                <form action="/" method="post">
+                    <div class="form-group">
+                        <label for="state">Enter a state:</label>
+                        <input action="/" type="text" id="state" name="state" list="states" placeholder="Start typing...">
+                        <datalist id="states">
+                            <option value="Andhra Pradesh">
+                            <option value="Arunachal Pradesh">
+                            <option value="Assam">
+                            <option value="Bihar">
+                            <option value="Chhattisgarh">
+                            <option value="Goa">
+                            <option value="Gujarat">
+                            <option value="Haryana">
+                            <option value="Himachal Pradesh">
+                            <option value="Jharkhand">
+                            <option value="Karnataka">
+                            <option value="Kerala">
+                            <option value="Madhya Pradesh">
+                            <option value="Maharashtra">
+                            <option value="Manipur">
+                            <option value="Meghalaya">
+                            <option value="Mizoram">
+                            <option value="Nagaland">
+                            <option value="Odisha">
+                            <option value="Punjab">
+                            <option value="Rajasthan">
+                            <option value="Sikkim">
+                            <option value="Tamil Nadu">
+                            <option value="Telangana">
+                            <option value="Tripura">
+                            <option value="Uttar Pradesh">
+                            <option value="Uttarakhand">
+                            <option value="West Bengal">
+                        </datalist>
+                        <br><br>
+                    <label for="temp_c">Temperature (°C):</label>
+                    <input type="number" id="temp_c" name="temp_c" step="0.1" required>
+                    <br><br>
+                    <label for="wind_kph">Wind Speed (kph):</label>
+                    <input type="number" id="wind_kph" name="wind_kph" step="0.1" required>
+                    <br><br>
+                    <label for="pressure_mb">Pressure (mb):</label>
+                    <input type="number" id="pressure_mb" name="pressure_mb" step="0.1" required>
+                    <br><br>
+                    <label for="precip_mm">Precipitation (mm):</label>
+                    <input type="number" id="precip_mm" name="precip_mm" step="0.1" required>
+                    <br><br>
+                    <label for="humidity">Humidity (%):</label>
+                    <input type="number" id="humidity" name="humidity" step="1" required>
+                    <br><br>
+                    <label for="cloud">Cloud Coverage (%):</label>
+                    <input type="number" id="cloud" name="cloud" step="1" required>
+                    <br><br>
+                    <label for="feelslike_c">Feels Like Temperature (°C):</label>
+                    <input type="number" id="feelslike_c" name="feelslike_c" step="0.1" required>
+                    <br><br>
+                    <label for="vis_km">Visibility (km):</label>
+                    <input type="number" id="vis_km" name="vis_km" step="0.1" required>
+                    <br><br>
+                        <button type="submit" class="btn btn-primary mt-1 item-center">Get Weather</button>
+                    </form> 
+                </div>
+                </div>
+                <div class="result mt-5 ml-5">
+                    <div class="text">
+                    <p class="result-text">Weather Prediction:{{ w }}</p>
+                    </div>
+                    <div class="image">
+                        <img src="/static/test.jpeg">
+                    </div>
+                    <div class="data">
+                    {% if d %}
+                    <h3> Previous Processed Data:</h3>
+                    <ul>
+                        {% for k,v in d.items() %}
+                            <p>{{ k }}:{{ v[0] }}</p>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    </div>
+                </div>
+                    
+</div>
+    
+</body>
+</html>
